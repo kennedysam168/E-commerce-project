@@ -38,9 +38,10 @@ router.get('/:id', (req, res) => {
   })
   .then((category) => {
     if (!category) {
-    res.status(err).json({message: 'Not found'});
+    res.status(404).json({message: 'Not found'});
     return;
     }
+    res.json(category)
   })
   .catch((err) => {
     res.json(err);
@@ -63,7 +64,7 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
-  Category.update({
+  Category.update(req.body, {
     where: {
       id: req.params.id
     }
@@ -92,6 +93,7 @@ router.delete('/:id', (req, res) => {
     res.status(err).json({message: 'Not found'});
     return;
     }
+    res.json(category)
   })
   .catch((err) => {
     res.json(err);

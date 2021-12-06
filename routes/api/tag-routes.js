@@ -40,8 +40,9 @@ router.get('/:id', (req, res) => {
   .then((tag) => {
     if (!tag) {
       res.status(404).json({message: 'Not found'});
+      return;
     }
-    return;
+    res.json(tag)
   })
   .catch((err) => {
     res.status(500).json(err);
@@ -66,7 +67,7 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
-  Tag.update({
+  Tag.update(req.body, {
     where: {
       id: req.params.id
     }
@@ -95,6 +96,7 @@ router.delete('/:id', (req, res) => {
     res.status(err).json({message: 'Not found'});
     return;
     }
+    res.json(tag)
   })
   .catch((err) => {
     res.json(err);
